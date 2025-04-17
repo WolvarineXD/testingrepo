@@ -55,5 +55,5 @@ export default defineConfig({
       },
     },
   },
-  base: "/Azile",
+  base: "/azile",
 }); 
