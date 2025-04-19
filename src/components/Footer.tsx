@@ -33,7 +33,7 @@ const Footer = () => {
                 <a href="https://in.linkedin.com/" className="bg-theme-gray hover:bg-theme-orange text-white p-2 rounded-full transition-colors">
                   <Linkedin size={18} />
                 </a>
-                <a href="https://www.instagram.com/" className="bg-theme-gray hover:bg-theme-orange text-white p-2 rounded-full transition-colors">
+                <a href="https://www.instagram.com/accounts/login/?hl=en" className="bg-theme-gray hover:bg-theme-orange text-white p-2 rounded-full transition-colors">
                   <Instagram size={18} />
                 </a>
                 <a href="https://www.youtube.com/@bcnishantreddy" className="bg-theme-gray hover:bg-theme-orange text-white p-2 rounded-full transition-colors">
