@@ -19,7 +19,7 @@ jobs:
         run: docker build -t wolvarinexd/azile-app:latest .
 
       - name: Run tests inside Docker container
-        run: docker run --rm wolvarinexd/azile-app:latest npm test
+        run: docker run --rm wolvarinexd/azile-app:latest npm run test
 
       - name: Push Docker image to Docker Hub
         run: docker push wolvarinexd/azile-app:latest
