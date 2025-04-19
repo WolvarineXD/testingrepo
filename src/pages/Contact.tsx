@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import Header from '../components/Header';
 import Navbar from '../components/Navbar';
@@ -12,42 +11,56 @@ const Contact = () => {
     subject: '',
     message: ''
   });
-  
+
   const { toast } = useToast();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setLoading(true);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Here you would normally send the data to your backend
-    console.log('Form submitted:', formData);
-    
+  try {
+    const form = new FormData();
+    Object.entries(formData).forEach(([key, value]) => form.append(key, value));
+
+    const response = await fetch("https://formspree.io/f/xanerqrk", {
+      method: "POST",
+      body: form,
+    });
+
+    if (response.ok) {
+      toast({
+        title: "Message Sent",
+        description: "We've received your message and will respond soon.",
+      });
+      setFormData({ name: '', email: '', subject: '', message: '' });
+    } else {
+      toast({
+        title: "Error",
+        description: "Something went wrong.",
+        variant: "destructive",
+      });
+    }
+  } catch (error) {
     toast({
-      title: "Message Sent",
-      description: "We've received your message and will respond soon.",
+      title: "Error",
+      description: "Unable to connect to form service.",
+      variant: "destructive",
     });
-    
-    // Reset form
-    setFormData({
-      name: '',
-      email: '',
-      subject: '',
-      message: ''
-    });
-  };
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <div className="min-h-screen bg-theme-black">
       <Header />
       <Navbar />
-      
+
       <section className="py-16">
         <div className="container mx-auto px-6">
           <h1 className="text-4xl font-bold text-white mb-8">Contact Us</h1>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             <div>
               <div className="bg-theme-darkGray rounded-lg p-8 mb-8">
@@ -56,7 +69,7 @@ const Contact = () => {
                   We're here to answer any questions you may have about India's digital initiatives.
                   Feel free to reach out to us with your inquiries, feedback, or collaboration proposals.
                 </p>
-                
+
                 <div className="space-y-4">
                   <div className="flex items-start">
                     <div className="bg-theme-orange p-2 rounded mr-4">
@@ -69,7 +82,7 @@ const Contact = () => {
                       <p className="text-theme-orange">contact@indiadigitalvision.gov.in</p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-start">
                     <div className="bg-theme-orange p-2 rounded mr-4">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -81,7 +94,7 @@ const Contact = () => {
                       <p className="text-theme-orange">+91 8904440075</p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-start">
                     <div className="bg-theme-orange p-2 rounded mr-4">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -94,13 +107,13 @@ const Contact = () => {
                       <p className="text-white/80">
                         RV University <br />
                         RVCE Post Mysore Road <br />
-                        Banglore - 560059, India
+                        Bangalore - 560059, India
                       </p>
                     </div>
                   </div>
                 </div>
               </div>
-              
+
               <div className="bg-theme-darkGray rounded-lg p-8">
                 <h2 className="text-2xl font-bold text-theme-orange mb-4">Office Hours</h2>
                 <div className="space-y-2 text-white/80">
@@ -110,10 +123,10 @@ const Contact = () => {
                 </div>
               </div>
             </div>
-            
+
             <div className="bg-theme-darkGray rounded-lg p-8">
               <h2 className="text-2xl font-bold text-theme-orange mb-6">Send us a Message</h2>
-              
+
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <label htmlFor="name" className="block text-white mb-2">Your Name</label>
@@ -127,7 +140,7 @@ const Contact = () => {
                     className="w-full px-4 py-2 rounded bg-theme-gray border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-theme-orange"
                   />
                 </div>
-                
+
                 <div>
                   <label htmlFor="email" className="block text-white mb-2">Email Address</label>
                   <input
@@ -140,7 +153,7 @@ const Contact = () => {
                     className="w-full px-4 py-2 rounded bg-theme-gray border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-theme-orange"
                   />
                 </div>
-                
+
                 <div>
                   <label htmlFor="subject" className="block text-white mb-2">Subject</label>
                   <select
@@ -159,7 +172,7 @@ const Contact = () => {
                     <option value="other">Other</option>
                   </select>
                 </div>
-                
+
                 <div>
                   <label htmlFor="message" className="block text-white mb-2">Your Message</label>
                   <textarea
@@ -172,7 +185,7 @@ const Contact = () => {
                     className="w-full px-4 py-2 rounded bg-theme-gray border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-theme-orange"
                   ></textarea>
                 </div>
-                
+
                 <button
                   type="submit"
                   className="bg-theme-orange text-white py-3 px-6 rounded-lg hover:bg-orange-600 transition-colors w-full"
