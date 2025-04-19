@@ -1,28 +1,26 @@
-name: Build, Test, and Push Docker Image
+# Stage 1: Build the Vite + React app
+FROM node:18-alpine AS builder
 
-on:
-  push:
-    branches: [main]
+WORKDIR /app
 
-jobs:
-  docker:
-    runs-on: ubuntu-latest
+# Copy package.json and package-lock.json (or yarn.lock) to install dependencies
+COPY package*.json ./
+RUN npm install
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+# Copy the rest of the project files
+COPY . .
 
-      - name: Log in to Docker Hub
-        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+# Build the Vite project
+RUN npm run build
 
-      - name: Build Docker image (builder stage)
-        run: docker build --target builder -t wolvarinexd/azile-app:builder .
+# Stage 2: Serve the app with Nginx
+FROM nginx:alpine
 
-      - name: Run tests inside Docker container
-        run: docker run --rm wolvarinexd/azile-app:builder npm run test
+# Copy the built files from the builder stage to Nginx's public directory
+COPY --from=builder /app/dist /usr/share/nginx/html
 
-      - name: Build and tag final Docker image
-        run: docker build -t wolvarinexd/azile-app:latest .
+# Expose port 80
+EXPOSE 80
 
-      - name: Push Docker image to Docker Hub
-        run: docker push wolvarinexd/azile-app:latest
+# Start Nginx
+CMD ["nginx", "-g", "daemon off;"]
