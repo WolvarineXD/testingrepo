@@ -24,19 +24,19 @@ const Footer = () => {
               </p>
               
               <div className="flex space-x-4 mt-6">
-                <a href="#" className="bg-theme-gray hover:bg-theme-orange text-white p-2 rounded-full transition-colors">
+                <a href="https://www.facebook.com/" className="bg-theme-gray hover:bg-theme-orange text-white p-2 rounded-full transition-colors">
                   <Facebook size={18} />
                 </a>
-                <a href="#" className="bg-theme-gray hover:bg-theme-orange text-white p-2 rounded-full transition-colors">
+                <a href="https://x.com/i/flow/single_sign_on" className="bg-theme-gray hover:bg-theme-orange text-white p-2 rounded-full transition-colors">
                   <Twitter size={18} />
                 </a>
-                <a href="#" className="bg-theme-gray hover:bg-theme-orange text-white p-2 rounded-full transition-colors">
+                <a href="https://in.linkedin.com/" className="bg-theme-gray hover:bg-theme-orange text-white p-2 rounded-full transition-colors">
                   <Linkedin size={18} />
                 </a>
-                <a href="#" className="bg-theme-gray hover:bg-theme-orange text-white p-2 rounded-full transition-colors">
+                <a href="https://www.instagram.com/" className="bg-theme-gray hover:bg-theme-orange text-white p-2 rounded-full transition-colors">
                   <Instagram size={18} />
                 </a>
-                <a href="#" className="bg-theme-gray hover:bg-theme-orange text-white p-2 rounded-full transition-colors">
+                <a href="https://www.youtube.com/@bcnishantreddy" className="bg-theme-gray hover:bg-theme-orange text-white p-2 rounded-full transition-colors">
                   <Youtube size={18} />
                 </a>
               </div>
