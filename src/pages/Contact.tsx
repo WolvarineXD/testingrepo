@@ -14,43 +14,44 @@ const Contact = () => {
 
   const { toast } = useToast();
 
-const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-  setLoading(true);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prevData => ({ ...prevData, [name]: value }));
+  };
 
-  try {
-    const form = new FormData();
-    Object.entries(formData).forEach(([key, value]) => form.append(key, value));
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-    const response = await fetch("https://formspree.io/f/xanerqrk", {
-      method: "POST",
-      body: form,
-    });
-
-    if (response.ok) {
-      toast({
-        title: "Message Sent",
-        description: "We've received your message and will respond soon.",
+    try {
+      const response = await fetch("https://formspree.io/f/xanerqrk", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
       });
-      setFormData({ name: '', email: '', subject: '', message: '' });
-    } else {
+
+      if (response.ok) {
+        toast({
+          title: "Message Sent",
+          description: "We've received your message and will respond soon.",
+        });
+        setFormData({ name: '', email: '', subject: '', message: '' });
+      } else {
+        toast({
+          title: "Error",
+          description: "Something went wrong.",
+          variant: "destructive"
+        });
+      }
+    } catch (error) {
       toast({
         title: "Error",
-        description: "Something went wrong.",
-        variant: "destructive",
+        description: "Unable to connect to form service.",
+        variant: "destructive"
       });
     }
-  } catch (error) {
-    toast({
-      title: "Error",
-      description: "Unable to connect to form service.",
-      variant: "destructive",
-    });
-  } finally {
-    setLoading(false);
-  }
-};
-
+  };
 
   return (
     <div className="min-h-screen bg-theme-black">
