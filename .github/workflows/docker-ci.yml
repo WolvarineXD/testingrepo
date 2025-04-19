@@ -1,4 +1,4 @@
-name: Build and Push Docker Image
+name: Build, Test, and Push Docker Image
 
 on:
   push:
@@ -17,6 +17,9 @@ jobs:
 
       - name: Build Docker image
         run: docker build -t wolvarinexd/azile-app:latest .
+
+      - name: Run tests inside Docker container
+        run: docker run --rm wolvarinexd/azile-app:latest npm test
 
       - name: Push Docker image to Docker Hub
         run: docker push wolvarinexd/azile-app:latest
