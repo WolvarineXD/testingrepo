@@ -12,7 +12,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Set up Node
+    - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
         node-version: '18'
@@ -23,9 +23,11 @@ jobs:
     - name: Build Vite App
       run: npm run build
 
+    - name: Install Vercel CLI
+      run: npm install -g vercel
+
     - name: Deploy to Vercel
       run: |
-        npm install -g vercel
         vercel --prod --token ${{ secrets.VERCEL_TOKEN }} \
                --confirm --org ${{ secrets.VERCEL_ORG_ID }} \
                --project ${{ secrets.VERCEL_PROJECT_ID }}
