@@ -25,8 +25,8 @@ jobs:
       - name: Install dependencies (clean)
         run: npm ci
 
-      - name: Install Jest
-        run: npm install --save-dev jest
+      - name: Install Jest and jsdom environment
+        run: npm install --save-dev jest jest-environment-jsdom
 
       - name: Install ts-node
         run: npm install --save-dev ts-node
