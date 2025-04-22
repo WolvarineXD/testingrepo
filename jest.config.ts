@@ -1,17 +1,8 @@
-// jest.config.ts
-import type { Config } from 'jest'
-
-const config: Config = {
+module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
   moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/src/$1', // for aliasing like @/lib/utils
+    '^@/(.*)$': '<rootDir>/src/$1',
   },
-  transform: {
-    '^.+\\.tsx?$': 'ts-jest',
-  },
-  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
-
-}
-
-export default config
+  setupFilesAfterEnv: ['@testing-library/jest-dom/extend-expect'],
+  testPathIgnorePatterns: ['/node_modules/', '/dist/'],
