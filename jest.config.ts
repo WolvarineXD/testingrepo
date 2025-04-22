@@ -1,12 +1,17 @@
-import type { Config } from 'jest';
+// jest.config.ts
+import type { Config } from 'jest'
 
 const config: Config = {
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
-  setupFilesAfterEnv: ['<rootDir>/src/setupTests.ts'],
   moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/src/$1',
+    '^@/(.*)$': '<rootDir>/src/$1', // for aliasing like @/lib/utils
   },
-};
+  transform: {
+    '^.+\\.tsx?$': 'ts-jest',
+  },
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
 
-export default config;
+}
+
+export default config
