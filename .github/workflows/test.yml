@@ -24,5 +24,8 @@ jobs:
           npm ci
           npm install --save-dev jest-environment-jsdom
 
+      - name: Verify TypeScript Configuration
+        run: tsc --noEmit
+
       - name: Run component tests
         run: npm test
