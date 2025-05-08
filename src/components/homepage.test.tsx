@@ -11,16 +11,19 @@ test('renders the homepage with header and footer', () => {
     </MemoryRouter>
   );
 
-  // 1. Check if the header is rendered correctly
+  // Debug rendered output for inspection
+  screen.debug();
+
+  // Header assertions
   const headerText = screen.getAllByText((_, element) =>
     element?.textContent === 'India Digital Vision'
-  )[0]; // Pick the first match
+  )[0];
   expect(headerText).toBeInTheDocument();
 
   const indiaText = screen.getByText('India');
   expect(indiaText).toHaveClass('text-theme-orange');
 
-  // 2. Check if the footer is rendered correctly
+  // Footer assertions
   const footerHeader = screen.getByText('India Digital Vision');
   expect(footerHeader).toBeInTheDocument();
 
@@ -29,6 +32,4 @@ test('renders the homepage with header and footer', () => {
 
   const aboutLink = screen.getByText('About');
   expect(aboutLink).toBeInTheDocument();
-
-  // Add more assertions as needed for the footer
 });
