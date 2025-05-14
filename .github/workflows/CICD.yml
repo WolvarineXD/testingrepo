@@ -1,4 +1,4 @@
-name: Run React Tests and Deploy to Docker Hub 
+name: Run React Tests and Deploy to Docker Hub  
 
 on:
   push:
